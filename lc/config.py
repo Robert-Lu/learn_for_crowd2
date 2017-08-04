@@ -7,8 +7,7 @@ def INFOMESSAGE(info):
     return _INFOMESSAGE.format(*info)
 
 
-_INFOMESSAGE = "Epoch loop {0:.0f}: loss {1:.2f}, train accuracy {2:.2f}, cross validation accuracy {3:.2f}"
-
+_INFOMESSAGE = "Epoch loop {0:.0f}: loss {1:.4f}, train accuracy {2:.4f}, cross validation accuracy {3:.4f}"
 
 DATAFILE = "df.dat"
 
