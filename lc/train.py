@@ -7,7 +7,7 @@ import time
 from . import analysis
 from . import config
 from contextlib import contextmanager
-from xilio import dump
+# from xilio import dump
 
 
 tools = type("Tools", (), {})()
@@ -86,6 +86,12 @@ def training(merge_key=tf.GraphKeys.SUMMARIES):
         yield tools
 
 
+def dump_info(path, info):
+    f = open(path)
+    f.write(info)
+    f.close()
+
+
 def simple_train(epoch_steps):
     infos = []
     with training() as tools:
@@ -97,4 +103,4 @@ def simple_train(epoch_steps):
                 recent = [x[1] for x in infos[-5:]]
                 if np.std(recent) < config.STOP_THRESHOLD:
                     break
-        dump(tools.path + "/trace", infos)
+        dump_info(tools.path + "/trace", infos)
