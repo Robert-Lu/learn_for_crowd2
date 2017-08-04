@@ -65,7 +65,7 @@ with apply_graph(five_layers_lrelu).as_default():
 ```
 
 #### Out
-
+```
 Epoch loop 1: loss 78.3254, train accuracy 78.3254, cross validation accuracy 78.4047
 Epoch loop 2: loss 84.0987, train accuracy 84.0987, cross validation accuracy 84.0185
 Epoch loop 3: loss 102.7358, train accuracy 102.7358, cross validation accuracy 102.8177
@@ -91,7 +91,9 @@ Epoch loop 22: loss 11.4296, train accuracy 11.4296, cross validation accuracy 1
 Epoch loop 23: loss 12.2073, train accuracy 12.2073, cross validation accuracy 12.2292
 Epoch loop 24: loss 5.8522, train accuracy 5.8522, cross validation accuracy 5.7974
 Epoch loop 25: loss 9.5259, train accuracy 9.5259, cross validation accuracy 9.4659
-**... ...**
+
+... ...
+
 Epoch loop 837: loss 2.5107, train accuracy 2.5107, cross validation accuracy 2.5709
 Epoch loop 838: loss 2.5039, train accuracy 2.5039, cross validation accuracy 2.5919
 Epoch loop 839: loss 2.5068, train accuracy 2.5068, cross validation accuracy 2.5684
@@ -104,3 +106,4 @@ Epoch loop 845: loss 2.5106, train accuracy 2.5106, cross validation accuracy 2.
 Epoch loop 846: loss 2.5045, train accuracy 2.5045, cross validation accuracy 2.5934
 Epoch loop 847: loss 2.5074, train accuracy 2.5074, cross validation accuracy 2.5699
 Epoch loop 848: loss 2.5009, train accuracy 2.5009, cross validation accuracy 2.5918
+```
