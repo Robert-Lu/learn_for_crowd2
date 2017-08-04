@@ -33,7 +33,7 @@ class Loader():
         self.shape = (self.X.shape[1], self.Y.shape[1])
 
         config.DATANAME = name
-        np.random.seed(hash(name) % 1_0000_0000)  # Random 8 digits hash
+        np.random.seed(hash(name) % 100000000)  # Random 8 digits hash
         self.train_choices = np.random.choice(self.cut1, self.cut + 1, False)
         self.valid_choices = np.array(list(set(range(self.cut1))
                                            - set(self.train_choices)))
