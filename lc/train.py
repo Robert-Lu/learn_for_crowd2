@@ -45,7 +45,7 @@ def training(merge_key=tf.GraphKeys.SUMMARIES, restore_form=None):
     with tf.Session() as sess:
         graph = tf.get_default_graph()
 
-        path = config.DATANAME + "/" + time.strftime("%m-%d-%y_%H:%M")
+        path = config.DATANAME + "/" + time.strftime("%m-%d-%y_%H_%M")
         g = tf.Variable(0, name="global_step", trainable=False)
         with tf.name_scope("epoch_step"):
             e = tf.Variable(0, name="epoch_step", trainable=False)
