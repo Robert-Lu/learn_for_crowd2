@@ -9,12 +9,11 @@ from tensorflow.contrib.data import Dataset
 from . import config
 
 
-
-
 class Loader():
     """
     A loader will be created represents set of data.
     """
+
     def __init__(self, name, cut=[0.7, 0.85], size=None, test=False):
         """
         cut: Data boundary between train, valid, test set.
@@ -24,8 +23,8 @@ class Loader():
             with open(config.DATAFILE, "rb") as f:
                 self.__dict__.update(pickle.load(f))
         else:
-            self.X = np.random.randint(0, 200, [5000,50])
-            self.Y = np.random.randint(0, 200, [5000,1])
+            self.X = np.random.randint(0, 200, [5000, 50])
+            self.Y = np.random.randint(0, 200, [5000, 1])
 
         assert self.X.shape[0] == self.Y.shape[0]
         self.data_size = self.X.shape[0]
@@ -34,11 +33,10 @@ class Loader():
         self.shape = (self.X.shape[1], self.Y.shape[1])
 
         config.DATANAME = name
-        np.random.seed(hash(name)%1_0000_0000) # Random 8 digits hash
-        self.train_choices = np.random.choice(self.cut1, self.cut+1, False)
+        np.random.seed(hash(name) % 1_0000_0000)  # Random 8 digits hash
+        self.train_choices = np.random.choice(self.cut1, self.cut + 1, False)
         self.valid_choices = np.array(list(set(range(self.cut1))
-                                     -set(self.train_choices)))
-
+                                           - set(self.train_choices)))
 
     def train(self, Datasize=None):
         with tf.name_scope("Dataset"):
@@ -47,7 +45,7 @@ class Loader():
             dat = lambda data: (
                 Dataset
                 .from_tensor_slices(
-                    data[choices,:].astype(np.float32))
+                    data[choices, :].astype(np.float32))
                 .batch(fin)
                 .make_initializable_iterator())
             x, y = dat(self.X), dat(self.Y)
@@ -56,15 +54,14 @@ class Loader():
             self._shuffle_batch_init = [x.initializer, y.initializer]
             return x.get_next("train_x"), y.get_next("train_y")
 
-
     def validation(self, Datasize=None):
         with tf.name_scope("Dataset"):
-            fin = int(min(self.cut1-self.cut, Datasize)
-                    if Datasize else self.cut1-self.cut)
+            fin = int(min(self.cut1 - self.cut, Datasize)
+                      if Datasize else self.cut1 - self.cut)
             choices = self.valid_choices[:fin]
             mod = lambda data, name: (tf.convert_to_tensor(
-                data[choices,:].astype(np.float32),
-                name = name
+                data[choices, :].astype(np.float32),
+                name=name
             ))
             return mod(self.X, "valid_x"), mod(self.Y, "valid_y")
 
@@ -72,8 +69,8 @@ class Loader():
         with tf.name_scope("Dataset"):
             fin = self.cut1
             mod = lambda data, name: (tf.convert_to_tensor(
-                data[fin:,:].astype(np.float32),
-                name = name
+                data[fin:, :].astype(np.float32),
+                name=name
             ))
             return mod(self.X, "test_x"), mod(self.Y, "test_y")
 
@@ -87,7 +84,7 @@ class Loader():
             choices = self.train_choices[:fin]
             dat = lambda data: (Dataset
                                 .from_tensor_slices(
-                                    data[choices,:].astype(np.float32))
+                                    data[choices, :].astype(np.float32))
                                 .shuffle(shuffle_buffer)
                                 .batch(batch_size)
                                 .make_initializable_iterator())
@@ -103,5 +100,3 @@ class Loader():
     def batch_init(self, sess):
         initializer = tf.get_collection("batch_init")
         sess.run(initializer)
-
-

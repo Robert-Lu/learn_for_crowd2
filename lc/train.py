@@ -14,6 +14,7 @@ tools = type("Tools", (), {})()
 
 __all__ = ["simple_train", "training"]
 
+
 def epoch_train(tools):
     """
     Do epoch train for one times.
@@ -29,7 +30,8 @@ def epoch_train(tools):
     tools.reporter(summary, g)
 
     try:
-        while True: sess.run(optimizer)
+        while True:
+            sess.run(optimizer)
     except tf.errors.OutOfRangeError:
         pass
     return infos
@@ -44,7 +46,7 @@ def training(merge_key=tf.GraphKeys.SUMMARIES):
         g = tf.Variable(0, name="global_step", trainable=False)
         with tf.name_scope("epoch_step"):
             e = tf.Variable(0, name="epoch_step", trainable=False)
-            e_add = tf.assign(e, e+1)
+            e_add = tf.assign(e, e + 1)
 
         fin_loss = analysis.fin_loss()
         with tf.name_scope("train"):
@@ -56,11 +58,10 @@ def training(merge_key=tf.GraphKeys.SUMMARIES):
                          .minimize(fin_loss, global_step=g))
         accur = graph.get_tensor_by_name("analysis/accuracy_train:0")
         val_accur = graph.get_tensor_by_name("analysis/accuracy_test:0")
-        infos = [e,fin_loss, accur, val_accur]
+        infos = [e, fin_loss, accur, val_accur]
         updates = [e_add, optimizer]
 
-
-        writer = tf.summary.FileWriter(path+"/summary", graph)
+        writer = tf.summary.FileWriter(path + "/summary", graph)
         summary = tf.summary.merge_all(merge_key)
         saver = tf.train.Saver(tf.get_collection("trainable_variables"))
 
@@ -71,10 +72,11 @@ def training(merge_key=tf.GraphKeys.SUMMARIES):
         tools.infos = [infos, summary, g, updates]
         tools.optimizer = optimizer
         import types
+
         def reporter(self, summary, e):
             writer.add_summary(summary, e)
             writer.flush()
-            saver.save(sess, path+"/chkpnt", g)
+            saver.save(sess, path + "/chkpnt", g)
 
         tools.reporter = types.MethodType(reporter, tools)
 
@@ -82,6 +84,7 @@ def training(merge_key=tf.GraphKeys.SUMMARIES):
         tf.local_variables_initializer().run(None, sess)
         graph.finalize()
         yield tools
+
 
 def simple_train(epoch_steps):
     infos = []
@@ -94,4 +97,4 @@ def simple_train(epoch_steps):
                 recent = [x[1] for x in infos[-5:]]
                 if np.std(recent) < config.STOP_THRESHOLD:
                     break
-        dump(tools.path+"/trace", infos)
+        dump(tools.path + "/trace", infos)
