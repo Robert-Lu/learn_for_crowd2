@@ -65,4 +65,4 @@ def apply_graph(graph):
 
 
 with apply_graph(five_layers_lrelu).as_default():
-    train.simple_train(500)
+    train.simple_train(50000)
