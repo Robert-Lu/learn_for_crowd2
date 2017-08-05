@@ -9,11 +9,11 @@ from tensorflow.contrib.keras.python.keras.layers import *
 
 config.LEARNING_RATE = 0.001
 config.DECAY_STEP = 50
-config.DECAY_RATE = 0.96
-config.L2_LAMBDA = 5
+config.DECAY_RATE = 0.90
+config.L2_LAMBDA = 0.05
 config.STOP_THRESHOLD = -1
 
-d = {"name": "TEST__", "discription": "___D___"}
+d = {"name": "TEST_", "discription": "TEST_D"}
 l = Loader(d)
 
 
