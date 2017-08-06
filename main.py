@@ -12,8 +12,9 @@ config.DECAY_STEP = 50
 config.DECAY_RATE = 0.90
 config.L2_LAMBDA = 0.05
 config.STOP_THRESHOLD = -1
+config.RESTORE_FROM = "08-03-17_16_38"
 
-d = {"name": "TEST_", "discription": "TEST_D"}
+d = {"name": "lambda_1", "discription": "TEST_D", }
 l = Loader(d)
 
 
@@ -34,7 +35,7 @@ def five_layers_lrelu(x, ref_y, test):
                         reuse=test, scope="fc")
     if not test:
         analysis.add_RMSE_loss(y, ref_y, "train")
-        # analysis.add_L2_loss()
+        analysis.add_L2_loss()
     else:
         analysis.add_RMSE_loss(y, ref_y, "test")
 
