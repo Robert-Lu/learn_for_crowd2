@@ -70,8 +70,9 @@ def training(merge_key=tf.GraphKeys.SUMMARIES, restore_from=None):
         saver = tf.train.Saver(tf.get_collection("trainable_variables"))
         print("check")
         if restore_from:
-            print(config.DATANAME+"/"+restore_from)
-            ckpt = tf.train.latest_checkpoint(config.DATANAME+"/"+restore_from)
+            print(config.DATANAME + "/" + restore_from)
+            ckpt = tf.train.latest_checkpoint(
+                config.DATANAME + "/" + restore_from)
             if ckpt:
                 print("RESTROE")
                 saver.restore(sess, ckpt)
@@ -107,7 +108,7 @@ def simple_train(epoch_steps):
     infos = []
     start_time = time.time()
     with training(restore_from=config.RESTORE_FROM) as tools:
-        write(tools.path+"/description", config.DISCRIPTION + "\n")
+        write(tools.path + "/description", config.DISCRIPTION + "\n")
         for i in range(epoch_steps):
             batch_init = tf.get_collection("batch_init")
             tools.sess.run(batch_init)
@@ -116,10 +117,10 @@ def simple_train(epoch_steps):
                 recent = [x[1] for x in infos[-5:]]
                 if np.std(recent) < config.STOP_THRESHOLD:
                     break
-        dump(tools.path+"/trace", infos)
+        dump(tools.path + "/trace", infos)
         duration = time.time() - start_time
-        append(tools.path+"/description",
-               "Time usage: "+ time.strftime(
+        append(tools.path + "/description",
+               "Time usage: " + time.strftime(
                    "%M minutes, %S seconds",
                    time.gmtime(duration)) + "\n")
     return infos
