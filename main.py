@@ -66,6 +66,8 @@ def five_layers_lrelu(x, ref_y, test):
     if not test:
         analysis.add_RMSE_loss(y, ref_y, "train")
         analysis.add_L2_loss()
+    else:
+        analysis.add_RMSE_loss(y, ref_y, "test")
 
 def linear(x, ref_y, test):
     test = None if not test else True
@@ -75,8 +77,6 @@ def linear(x, ref_y, test):
         analysis.add_RMSE_loss(y, ref_y, "train")
         # analysis.add_L2_loss()
     else:
-    else:
-        analysis.add_RMSE_loss(y, ref_y, "test")
 
         analysis.add_RMSE_loss(y, ref_y, "test")
 
