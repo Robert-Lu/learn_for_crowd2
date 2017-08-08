@@ -16,7 +16,7 @@ config.STOP_THRESHOLD = -1
 config.RESTORE_FROM = None
 
 d = {"name": "lambda_1", "discription": "TEST_D", }
-l = Loader(d, [500, 750])
+l = Loader(d, size=[500, 750])
 
 '''
   def apply(self, inputs, *args, **kwargs):
