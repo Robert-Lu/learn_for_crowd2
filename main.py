@@ -16,7 +16,7 @@ config.STOP_THRESHOLD = -1
 config.RESTORE_FROM = None
 
 d = {"name": "lambda_1", "discription": "TEST_D", }
-l = Loader(d) 
+l = Loader(d)
 
 '''
   def apply(self, inputs, *args, **kwargs):
@@ -52,7 +52,6 @@ def five_layers_lrelu(x, ref_y, test):
     test = None if not test else True
     # lrelu = LeakyReLU()
     hid1 = fully_connected(
-<<<<<<< HEAD
         x, 1000, activation_fn=lambda input: max_out(input, 500), reuse=test, scope="layer1")
     hid2 = fully_connected(
         hid1, 500, activation_fn=lambda input: max_out(input, 250), reuse=test, scope="layer2")
@@ -62,17 +61,6 @@ def five_layers_lrelu(x, ref_y, test):
         hid3, 100, activation_fn=lambda input: max_out(input, 50), reuse=test, scope="layer4")
     hid5 = fully_connected(
         hid4, 50, activation_fn=lambda input: max_out(input, 25), reuse=test, scope="layer5")
-=======
-        x, 200, activation_fn=lambda input: max_out(input, 100), reuse=test, scope="layer1")
-    hid2 = fully_connected(
-        hid1, 100, activation_fn=lambda input: max_out(input, 50), reuse=test, scope="layer2")
-    hid3 = fully_connected(
-        hid2, 50, activation_fn=lambda input: max_out(input, 25), reuse=test, scope="layer3")
-    hid4 = fully_connected(
-        hid3, 50, activation_fn=lambda input: max_out(input, 25), reuse=test, scope="layer4")
-    hid5 = fully_connected(
-        hid4, 20, activation_fn=lambda input: max_out(input, 10), reuse=test, scope="layer5")
->>>>>>> c56101869d135d8d3e8ee65fac3e4c1ac2a57068
     y = fully_connected(hid5, 1, activation_fn=tf.identity,
                         reuse=test, scope="fc")
     if not test:
