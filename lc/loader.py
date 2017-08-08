@@ -29,7 +29,7 @@ class Loader():
 
         assert self.X.shape[0] == self.Y.shape[0]
         self.data_size = self.X.shape[0]
-        self.cut = int(size[1] if size else self.data_size * cut[0])
+        self.cut = int(size[0] if size else self.data_size * cut[0])
         self.cut1 = int(size[1] if size else self.data_size * cut[1])
         self.shape = (self.X.shape[1], self.Y.shape[1])
 

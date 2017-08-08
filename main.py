@@ -3,6 +3,7 @@
 
 import tensorflow as tf
 
+import pdb
 from lc import *
 from tensorflow.contrib.layers import *
 from tensorflow.contrib.keras.python.keras.layers import *
@@ -12,33 +13,59 @@ config.DECAY_STEP = 50
 config.DECAY_RATE = 0.90
 config.L2_LAMBDA = 0.05
 config.STOP_THRESHOLD = -1
-config.RESTORE_FROM = "08-03-17_16_38"
+config.RESTORE_FROM = None
 
 d = {"name": "lambda_1", "discription": "TEST_D", }
-l = Loader(d)
+l = Loader(d, [500, 750])
+
+'''
+  def apply(self, inputs, *args, **kwargs):
+    Apply the layer on a input.
+
+    This simply wraps `self.__call__`.
+
+    Arguments:
+      inputs: Input tensor(s).
+      *args: additional positional arguments to be passed to `self.call`.
+      **kwargs: additional keyword arguments to be passed to `self.call`.
+'''
+
+
+def max_out(inputs, num_units, axis=None):
+
+    shape = inputs.get_shape().as_list()
+    if shape[0] is None:
+        shape[0] = -1
+    if axis is None:  # Assume that channel is the last dimension
+        axis = -1
+    num_channels = shape[axis]
+    if num_channels % num_units:
+        raise ValueError('number of features({}) is not '
+                         'a multiple of num_units({})'.format(num_channels, num_units))
+    shape[axis] = num_units
+    shape += [num_channels // num_units]
+    outputs = tf.reduce_max(tf.reshape(inputs, shape), -1, keep_dims=False)
+    return outputs
 
 
 def five_layers_lrelu(x, ref_y, test):
     test = None if not test else True
-    lrelu = LeakyReLU()
+    # lrelu = LeakyReLU()
     hid1 = fully_connected(
-        x, 1000, activation_fn=lrelu.apply, reuse=test, scope="layer1")
+        x, 1600, activation_fn=lambda input: max_out(input, 800), reuse=test, scope="layer1")
     hid2 = fully_connected(
-        hid1, 1000, activation_fn=lrelu.apply, reuse=test, scope="layer2")
+        hid1, 800, activation_fn=lambda input: max_out(input, 400), reuse=test, scope="layer2")
     hid3 = fully_connected(
-        hid2, 1000, activation_fn=lrelu.apply, reuse=test, scope="layer3")
+        hid2, 400, activation_fn=lambda input: max_out(input, 200), reuse=test, scope="layer3")
     hid4 = fully_connected(
-        hid3, 1000, activation_fn=lrelu.apply, reuse=test, scope="layer4")
+        hid3, 200, activation_fn=lambda input: max_out(input, 100), reuse=test, scope="layer4")
     hid5 = fully_connected(
-        hid4, 1000, activation_fn=lrelu.apply, reuse=test, scope="layer5")
+        hid4, 100, activation_fn=lambda input: max_out(input, 50), reuse=test, scope="layer5")
     y = fully_connected(hid5, 1, activation_fn=tf.identity,
                         reuse=test, scope="fc")
     if not test:
         analysis.add_RMSE_loss(y, ref_y, "train")
         analysis.add_L2_loss()
-    else:
-        analysis.add_RMSE_loss(y, ref_y, "test")
-
 
 def linear(x, ref_y, test):
     test = None if not test else True
@@ -48,6 +75,9 @@ def linear(x, ref_y, test):
         analysis.add_RMSE_loss(y, ref_y, "train")
         # analysis.add_L2_loss()
     else:
+    else:
+        analysis.add_RMSE_loss(y, ref_y, "test")
+
         analysis.add_RMSE_loss(y, ref_y, "test")
 
 
