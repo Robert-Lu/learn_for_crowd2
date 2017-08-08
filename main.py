@@ -52,15 +52,15 @@ def five_layers_lrelu(x, ref_y, test):
     test = None if not test else True
     # lrelu = LeakyReLU()
     hid1 = fully_connected(
-        x, 1000, activation_fn=lambda input: max_out(input, 8), reuse=test, scope="layer1")
+        x, 1000, activation_fn=lambda input: max_out(input, 10), reuse=test, scope="layer1")
     hid2 = fully_connected(
-        hid1, 1000, activation_fn=lambda input: max_out(input, 5), reuse=test, scope="layer2")
+        hid1, 1000, activation_fn=lambda input: max_out(input, 10), reuse=test, scope="layer2")
     hid3 = fully_connected(
-        hid2, 1000, activation_fn=lambda input: max_out(input, 5), reuse=test, scope="layer3")
+        hid2, 1000, activation_fn=lambda input: max_out(input, 10), reuse=test, scope="layer3")
     hid4 = fully_connected(
-        hid3, 1000, activation_fn=lambda input: max_out(input, 4), reuse=test, scope="layer4")
+        hid3, 1000, activation_fn=lambda input: max_out(input, 10), reuse=test, scope="layer4")
     hid5 = fully_connected(
-        hid4, 1000, activation_fn=lambda input: max_out(input, 4), reuse=test, scope="layer5")
+        hid4, 1000, activation_fn=lambda input: max_out(input, 10), reuse=test, scope="layer5")
     y = fully_connected(hid5, 1, activation_fn=tf.identity,
                         reuse=test, scope="fc")
     if not test:
