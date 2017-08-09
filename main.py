@@ -8,8 +8,8 @@ from lc import *
 from tensorflow.contrib.layers import *
 from tensorflow.contrib.keras.python.keras.layers import *
 
-config.LEARNING_RATE = 0.00001
-config.DECAY_STEP = 50
+config.LEARNING_RATE = 0.005
+config.DECAY_STEP = 25
 config.DECAY_RATE = 0.90
 config.L2_LAMBDA = 0.025
 config.STOP_THRESHOLD = -1
