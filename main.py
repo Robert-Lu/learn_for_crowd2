@@ -13,7 +13,7 @@ config.DECAY_STEP = 50
 config.DECAY_RATE = 0.90
 config.L2_LAMBDA = 0.05
 config.STOP_THRESHOLD = -1
-config.RESTORE_FROM = None
+config.RESTORE_FROM = "08-09-17_07_48"
 
 d = {"name": "lambda_1", "discription": "TEST_D", }
 l = Loader(d)
