@@ -8,12 +8,12 @@ from lc import *
 from tensorflow.contrib.layers import *
 from tensorflow.contrib.keras.python.keras.layers import *
 
-config.LEARNING_RATE = 0.001
+config.LEARNING_RATE = 0.00001
 config.DECAY_STEP = 50
 config.DECAY_RATE = 0.90
-config.L2_LAMBDA = 0.05
+config.L2_LAMBDA = 0.025
 config.STOP_THRESHOLD = -1
-config.RESTORE_FROM = "08-09-17_07_48"
+config.RESTORE_FROM = None # "08-09-17_07_48"
 
 d = {"name": "lambda_1", "discription": "TEST_D", }
 l = Loader(d)
